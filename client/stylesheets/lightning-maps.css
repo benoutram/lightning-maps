@@ -8,28 +8,6 @@ body {
 	padding: 0
 }
 
-#map-canvas {
-	height: 100%
-}
-
-.control {
-	background-color: #EEEEFF;
-	margin: 1em;
-	padding: .5em;
-	border-radius: 1em;
-}
-
-.pure-button-add {
-	background: rgb(66, 184, 221) !important;
-	border-radius: 4px;
-	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-}
-
-.pure-button-xmall {
-	background: rgb(66, 184, 221) !important;
-	font-size: 75% !important;
-}
-
 .infobox-wrapper {
     display:none;
 }
