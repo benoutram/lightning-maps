@@ -1,0 +1,36 @@
+<template name="configurationControl">
+	<div style="z-index: 0; position: absolute; bottom: 13px; right: 0px;">
+		{{#if currentUser}}
+		{{#with configuration}}
+		<form class="pure-form pure-form-stacked control">
+			<legend>
+				Configuration
+			</legend>
+			<fieldset class="pure-group">
+				<input id="localisation" class="pure-input-1 config-property" type="text" placeholder="Localisation" value="{{localisation}}">
+				<input id="regionalisation" class="pure-input-1 config-property" type="text" placeholder="Regionalisation" value="{{regionalisation}}">
+				<input id="apiVersion" class="pure-input-1 config-property" type="text" placeholder="Version" value="{{apiVersion}}">
+			</fieldset>
+			<label for="pan" class="pure-checkbox">
+				<input id="pan" type="checkbox" class="config-control" {{pan}}>
+				Pan</label>
+			<label for="zoom" class="pure-checkbox">
+				<input id="zoom" type="checkbox" class="config-control" {{zoom}}>
+				Zoom</label>
+			<label for="mapType" class="pure-checkbox">
+				<input id="mapType" type="checkbox" class="config-control" {{mapType}}>
+				Map Type</label>
+			<label for="scale" class="pure-checkbox">
+				<input id="scale" type="checkbox" class="config-control" {{scale}}>
+				Scale</label>
+			<label for="streetView" class="pure-checkbox">
+				<input id="streetView" type="checkbox" class="config-control" {{streetView}}>
+				Street View</label>
+			<label for="overview" class="pure-checkbox">
+				<input id="overview" type="checkbox" class="config-control" {{overview}}>
+				Overview</label>
+		</form>
+		{{/with}}
+		{{/if}}
+	</div>
+</template>

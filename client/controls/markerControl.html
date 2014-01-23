@@ -1,0 +1,20 @@
+<template name="addMarkerControl">
+	<div>
+		<form class="pure-form pure-form-stacked control">
+			<legend>
+				Marker
+			</legend>
+			<fieldset class="pure-group">
+				<input id="markerTitle" class="pure-input-1" type="text" placeholder="Title" value="{{title}}">
+				<input id="markerDescription" class="pure-input-1 pure-input-rounded" type="text" placeholder="Description">
+			</fieldset>
+			<fieldset class="pure-group">
+				<input id="markerLatitude" class="pure-input-1" type="text" placeholder="Latitude">
+				<input id="markerLongitude" class="pure-input-1" type="text" placeholder="Longitude">
+			</fieldset>
+			<button id="addMarker" type="button" class="pure-button pure-button-add">
+				Add
+			</button>
+		</form>
+	</div>
+</template>

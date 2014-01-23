@@ -1,0 +1,22 @@
+<head>
+	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.1.0/pure-min.css">
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3.14&sensor=false&key=AIzaSyA5UPXabiWwdiV9mOwxsZSinfFIE-zUu3g"></script>
+	<script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/src/infobox.js"></script>
+	<title>Home</title>
+</head>
+
+<body>
+	{{> page}}
+</body>
+
+<template name="page">
+	<div class="container">
+		<div class="span5">
+			<div style="float: right">
+				{{loginButtons align="right"}}
+			</div>
+		</div>
+	</div>
+	{{> map}}
+</template>
