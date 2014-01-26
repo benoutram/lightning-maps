@@ -1,20 +1,21 @@
-<template name="addMarkerControl">
-	<div>
+<template name="markerControl">
+	{{#if visible}}
+	<div class="control-div marker-control-div">
 		<form class="pure-form pure-form-stacked control">
 			<legend>
-				Marker
+				<i class="fa fa-map-marker"></i> Marker
 			</legend>
 			<fieldset class="pure-group">
 				<input id="markerTitle" class="pure-input-1" type="text" placeholder="Title" value="{{title}}">
 				<input id="markerDescription" class="pure-input-1 pure-input-rounded" type="text" placeholder="Description">
 			</fieldset>
-			<fieldset class="pure-group">
-				<input id="markerLatitude" class="pure-input-1" type="text" placeholder="Latitude">
-				<input id="markerLongitude" class="pure-input-1" type="text" placeholder="Longitude">
-			</fieldset>
-			<button id="addMarker" type="button" class="pure-button pure-button-add">
-				Add
+			<button id="updateMarker" type="button" class="pure-button pure-button-add">
+				Update
+			</button>
+			<button id="deleteMarker" type="button" class="pure-button pure-button-add">
+				Delete
 			</button>
 		</form>
 	</div>
+	{{/if}}
 </template>

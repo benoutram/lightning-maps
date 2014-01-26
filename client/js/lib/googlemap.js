@@ -19,39 +19,7 @@ LightningMaps.map = function() {
 					_this.geocoder = new google.maps.Geocoder();
 					_this.gmap = new google.maps.Map(document
 							.getElementById("map-canvas"), _this.mapOptions());
-					_this.initControls();
 				});
-			},
-			initControls : function() {
-				this.configurationControl = new MapControl(this.gmap,
-						google.maps.ControlPosition.RIGHT_BOTTOM, Meteor
-								.render(function() {
-									return Template.configurationControl({});
-								}));
-				this.centerControl = new MapControl(this.gmap,
-						google.maps.ControlPosition.RIGHT_BOTTOM, Meteor
-								.render(function() {
-									return Template.centerControl({});
-								}));
-				this.markerControl = new MapControl(this.gmap,
-						google.maps.ControlPosition.RIGHT_BOTTOM, Meteor
-								.render(function() {
-									return Template.addMarkerControl({});
-								}));
-				this.searchControl = new MapControl(this.gmap,
-						google.maps.ControlPosition.TOP_CENTER, Meteor
-								.render(function() {
-									return Template.searchControl({});
-								}));
-				this.toolsControl = new MapControl(this.gmap,
-						google.maps.ControlPosition.TOP_LEFT, Meteor
-								.render(function() {
-									return Template.toolsControl({});
-								}));
-
-				this.configurationControl.show();
-				this.searchControl.show();
-				this.toolsControl.show();
 			},
 			mapOptions : function() {
 				return {
@@ -63,10 +31,6 @@ LightningMaps.map = function() {
 					styles : [ LightningMaps.DEFAULT_STYLE ],
 				};
 			},
-			addControl : function(position, controlNode) {
-				this.gmap.controls[position].push(controlNode.firstChild);
-				document.body.appendChild(controlNode);
-			},
 			addMarker : function(markerVal) {
 				if (!this.gmap) {
 					console.log('Not initialised yet');
@@ -74,6 +38,7 @@ LightningMaps.map = function() {
 					var existingMarker = this.existingMarker(markerVal);
 					if (_.isUndefined(existingMarker)) {
 						// marker doesn't exist so add it
+						/*
 						var infobox = new InfoBox(
 								{
 									content : document
@@ -95,7 +60,7 @@ LightningMaps.map = function() {
 						var infowindow = new google.maps.InfoWindow({
 							content : '<div id="content"><p>'
 									+ markerVal.description + '</p></div>'
-						});
+						});*/
 						var marker = new google.maps.Marker({
 							map : this.gmap,
 							draggable : true,
@@ -105,18 +70,20 @@ LightningMaps.map = function() {
 							position : new google.maps.LatLng(
 									markerVal.latitude, markerVal.longitude)
 						});
+						/*
 						google.maps.event.addListener(marker, 'click',
 								function(event) {
 									infobox.open(this.gmap, this);
-								});
+								});*/
 						google.maps.event.addListener(marker, 'click',
 								function(event) {
-									console.log(event);
+									Session.set('markerControlVisible', true);
+									Session.set('markerSelected', markerVal.id);
 								});
 						google.maps.event.addListener(marker, 'dragend',
 								function(event) {
-									var latitude = event.latLng.ob;
-									var longitude = event.latLng.pb;
+									var latitude = event.latLng.d;
+									var longitude = event.latLng.e;
 									Meteor.call('updateMarker', {
 										id : markerVal.id,
 										title : markerVal.title,
@@ -201,13 +168,13 @@ LightningMaps.map = function() {
 								var position = new google.maps.LatLng(
 										position.coords.latitude,
 										position.coords.longitude);
-								_this.centerOn(position,19);
-								_this
-										.reverseGeocode(position,
-												function(address) {
-													_this.infoWindow(position,
-															address);
-												});
+								_this.centerOn(position, 19);
+								_this.reverseGeocode(position,
+										function(address) {
+											_this.infoWindow(position,
+													'<i class="fa fa-location-arrow"></i> '
+															+ address);
+										});
 							}, function() {
 								console.log('No geolocation');
 							});

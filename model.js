@@ -8,6 +8,7 @@ PenaltyPostcode = new Meteor.Collection("penaltyPostcode");
 Meteor.methods({
 	createMarker : function(options) {
 		check(options, {
+			id : NonEmptyString,
 			title : NonEmptyString,
 			description : NonEmptyString,
 			latitude : Coordinate,
@@ -18,16 +19,22 @@ Meteor.methods({
 			throw new Meteor.Error(403, "You must be logged in");
 		}
 
-		var id = Random.id();
 		Markers.insert({
-			_id : id,
+			_id : options.id,
 			owner : this.userId,
 			title : options.title,
 			description : options.description,
 			latitude : options.latitude,
 			longitude : options.longitude
 		});
-		return id;
+		return options.id;
+	},
+	deleteMarker : function(id) {
+		Markers.remove(id, function(error, result) {
+			if (typeof error !== 'undefined') {
+				console.log(error);
+			}
+		});
 	},
 	updateMarker : function(markerVal) {
 		Markers.update(markerVal.id, {

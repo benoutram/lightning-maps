@@ -1,8 +1,9 @@
 <template name="centerControl">
-	<div>
-		<form class="pure-form pure-form-stacked control">
+	{{#if visible}}
+	<div class="control-div center-control-div">
+		<form class="pure-form control">
 			<legend>
-				Center
+				<i class="fa fa-anchor"></i> Center
 			</legend>
 			<fieldset class="pure-group">
 				<input id="latitude" class="pure-input-1" type="text" placeholder="Latitude e.g. 51.5034">
@@ -13,4 +14,5 @@
 			</button>
 		</form>
 	</div>
+	{{/if}}
 </template>

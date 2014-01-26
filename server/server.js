@@ -1,5 +1,6 @@
 Meteor.startup(function() {
 	// code to run on server at startup
+	/*
 	if (Markers.find().count() === 0) {
 		Markers.insert({
 			title : 'Test Marker 1',
@@ -7,7 +8,7 @@ Meteor.startup(function() {
 			latitude : 53.375646964321525,
 			longitude : -1.4694486506082045
 		});
-	}
+	}*/
 });
 
 Accounts.onCreateUser(function(options, user) {
@@ -38,6 +39,10 @@ Meteor.publish("userData", function () {
 
 Meteor.publish("accident", function (dayOfWeek) {
     return Accident.find({'Day_of_Week': dayOfWeek},{fields: {'Latitude': 1, 'Longitude': 1, 'Day_of_Week' : 1}});
+});
+
+Meteor.publish("markers", function () {
+    return Markers.find({});
 });
 
 Meteor.publish("penaltyPostcode", function () {

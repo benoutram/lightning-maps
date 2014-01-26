@@ -3,6 +3,42 @@
 	margin: 1em;
 	padding: .5em;
 	border-radius: 1em;
+	font-size: 75%
+}
+
+.search-control {
+	background-color: inherit !important;
+	font-size: 16px;
+}
+
+.control-div {
+	z-index: 0;
+	position: absolute;
+}
+
+.marker-control-div {
+	bottom: 26px;
+	left: 0px;
+}
+
+.center-control-div {
+	bottom: 26px;
+	left: 0px;
+}
+
+.configuration-control-div {
+	bottom: 13px;
+	right: 0px;
+}
+
+.search-control-div {
+	top: 0px;
+	left: 594px;
+}
+
+.tools-control-div {
+	top: 0px;
+	left: 88px;
 }
 
 .pure-button-add {
