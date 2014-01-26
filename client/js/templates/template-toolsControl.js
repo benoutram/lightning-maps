@@ -4,7 +4,7 @@ Template.toolsControl.events({
 		var description = 'Sample Description';
 		
 		// get map center
-		var center = gMap.center();
+		var center = LightningMaps.map().center();
 		var latitude = center.lat();
 		var longitude = center.lng();
 		
@@ -19,12 +19,12 @@ Template.toolsControl.events({
 			}
 		});
 		
-		gMap.markerControl.show();
+		LightningMaps.map().markerControl.show();
 	},
 	'click #geolocation' : function(event, template) {
-		gMap.geolocate();
+		LightningMaps.map().geolocate();
 	},
 	'click #center' : function(event, template) {
-		gMap.centerControl.show();
+		LightningMaps.map().centerControl.show();
 	}
 });

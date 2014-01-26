@@ -2,6 +2,8 @@
 // it is backed by a MongoDB collection named "markers".
 
 Markers = new Meteor.Collection("markers");
+Accident = new Meteor.Collection("accident");
+PenaltyPostcode = new Meteor.Collection("penaltyPostcode");
 
 Meteor.methods({
 	createMarker : function(options) {

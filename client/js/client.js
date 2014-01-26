@@ -1,9 +1,7 @@
 // Subscribe to additional User fields
 Meteor.subscribe("userData");
 
-function userHasControl(controlName) {
-	if (!Meteor.user()) {
-		return false;
-	}
-	return Meteor.user().configuration[controlName];
-}
+var accidentDayOfWeek="5";  // Friday
+
+Meteor.subscribe("accident", accidentDayOfWeek);
+Meteor.subscribe("penaltyPostcode");

@@ -1,12 +1,13 @@
-var gMap = new GMap();
-
 Template.map.rendered = function() {
+	/*
 	if (!Session.get('map')) {
 		// initialise the map
 		gMap.init(53.375646964321525, -1.4694486506082045);
 		Session.set('map', true);
-	}
-
+	}*/
+    
+	LightningMaps.map().init();
+	
 	console.log('registering autorun');
 	Deps.autorun(function() {
 		var markers = Markers.find().fetch();
@@ -18,7 +19,7 @@ Template.map.rendered = function() {
 				latitude : marker.latitude,
 				longitude : marker.longitude
 			};
-			gMap.addMarker(markerVal);
+			LightningMaps.map().addMarker(markerVal);
 		});
 	});
 };

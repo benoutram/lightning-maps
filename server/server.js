@@ -36,6 +36,14 @@ Meteor.publish("userData", function () {
                            {fields: {'configuration': 1}});
 });
 
+Meteor.publish("accident", function (dayOfWeek) {
+    return Accident.find({'Day_of_Week': dayOfWeek},{fields: {'Latitude': 1, 'Longitude': 1, 'Day_of_Week' : 1}});
+});
+
+Meteor.publish("penaltyPostcode", function () {
+    return PenaltyPostcode.find({},{fields: {'Latitude': 1, 'Longitude': 1, 'Total': 1}});
+});
+
 // Allow changes to the User document
 Meteor.users.allow({
 	update: function() {

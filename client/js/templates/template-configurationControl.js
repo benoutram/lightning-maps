@@ -44,3 +44,10 @@ Template.configurationControl.events = {
 		});
 	}
 };
+
+function userHasControl(controlName) {
+	if (!Meteor.user()) {
+		return false;
+	}
+	return Meteor.user().configuration[controlName];
+}

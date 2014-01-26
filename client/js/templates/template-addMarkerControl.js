@@ -1,6 +1,5 @@
 Template.addMarkerControl.events({
 	'click #addMarker' : function(event, template) {
-		console.log('add marker');
 		var title = template.find("#markerTitle").value;
 		var description = template.find("#markerDescription").value;
 		var latitude = parseFloat(template.find("#markerLatitude").value, 10);
