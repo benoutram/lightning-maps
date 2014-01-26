@@ -57,7 +57,9 @@ LightningMaps.map = function() {
 				return {
 					// disableDefaultUI : true,
 					zoom : LightningMaps.DEFAULT_ZOOM,
-					center : new google.maps.LatLng(LightningMaps.DEFAULT_POS.latitude, LightningMaps.DEFAULT_POS.longitude),
+					center : new google.maps.LatLng(
+							LightningMaps.DEFAULT_POS.latitude,
+							LightningMaps.DEFAULT_POS.longitude),
 					styles : [ LightningMaps.DEFAULT_STYLE ],
 				};
 			},
@@ -149,8 +151,16 @@ LightningMaps.map = function() {
 			center : function() {
 				return this.gmap.getCenter();
 			},
-			centerOn : function(position) {
-				this.gmap.setCenter(position);
+			centerOnCoords : function(latitude, longitude, zoom) {
+				this
+						.centerOn(new google.maps.LatLng(latitude, longitude),
+								zoom);
+			},
+			centerOn : function(position, zoom) {
+				this.gmap.panTo(position);
+				if (_.isNumber(zoom)) {
+					this.zoom(zoom);
+				}
 			},
 			clusterMap : function() {
 				var clusterMarkers = [];
@@ -191,7 +201,7 @@ LightningMaps.map = function() {
 								var position = new google.maps.LatLng(
 										position.coords.latitude,
 										position.coords.longitude);
-								_this.centerOn(position);
+								_this.centerOn(position,19);
 								_this
 										.reverseGeocode(position,
 												function(address) {
@@ -273,6 +283,9 @@ LightningMaps.map = function() {
 					_this.centerOn(position);
 					_this.infoWindow(position, address);
 				});
+			},
+			zoom : function(level) {
+				this.gmap.setZoom(level);
 			},
 			/**
 			 * Retrieve a marker that has already been added to the map.
