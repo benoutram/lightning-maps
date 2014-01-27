@@ -31,7 +31,7 @@ LightningMaps.map = function() {
 					styles : [ LightningMaps.DEFAULT_STYLE ],
 				};
 			},
-			accidentLayer : function() {
+			accidentLayerShow : function() {
 				var markers = [];
 
 				Accident.find({}, {
@@ -45,10 +45,10 @@ LightningMaps.map = function() {
 										accidentDoc.Longitude)
 							}));
 						});
-				this.clusterMap(markers);
+				this.accidentLayer = this.clusterMap(markers);
 			},
 			accidentLayerHide : function() {
-
+				this.accidentLayer.clearMarkers();
 			},
 			addMarker : function(markerVal) {
 				if (!this.gmap) {
@@ -143,7 +143,7 @@ LightningMaps.map = function() {
 				}
 			},
 			clusterMap : function(markers) {
-				var markerCluster = new MarkerClusterer(this.gmap, markers);
+				return new MarkerClusterer(this.gmap, markers);
 			},
 			geocode : function(address, callback) {
 				this.geocoder.geocode({
@@ -180,38 +180,15 @@ LightningMaps.map = function() {
 				}
 			},
 			heatMap : function(data) {
-				var heatMapData = [];
-				PenaltyPostcode
-						.find({}, {
-							"Latitude" : 1,
-							"Longitude" : 1,
-							"Total" : 1
-						})
-						.forEach(
-								function(penaltyPostcodeDoc) {
-									if (_.isNumber(penaltyPostcodeDoc.Latitude)
-											&& _
-													.isNumber(penaltyPostcodeDoc.Longitude)) {
-										heatMapData
-												.push({
-													location : new google.maps.LatLng(
-															penaltyPostcodeDoc.Latitude,
-															penaltyPostcodeDoc.Longitude),
-													weight : penaltyPostcodeDoc.Total
-												});
-									} else {
-										// console.log('No location found for: '
-										// + penaltyPostcodeDoc.District);
-									}
-								});
-				var heatmap = new google.maps.visualization.HeatmapLayer({
-					data : heatMapData,
+				var heatMap = new google.maps.visualization.HeatmapLayer({
+					data : data,
 					gradient : LightningMaps.HEATMAP_GRADIENT,
 					maxIntensity : 10000,
 					dissipating : true,
 					radius : 20
 				});
-				heatmap.setMap(this.gmap);
+				heatMap.setMap(this.gmap);
+				return heatMap;
 			},
 			infoWindow : function(position, content) {
 				// close any existing infoWindows first
@@ -225,7 +202,7 @@ LightningMaps.map = function() {
 					content : content
 				}));
 			},
-			penaltyPostcodeLayer : function() {
+			penaltyPostcodeLayerShow : function() {
 				var data = [];
 				PenaltyPostcode
 						.find({}, {
@@ -250,10 +227,10 @@ LightningMaps.map = function() {
 										// + penaltyPostcodeDoc.District);
 									}
 								});
-				this.heatMap(data);
+				this.penaltyPostcodeLayer = this.heatMap(data);
 			},
 			penaltyPostcodeLayerHide : function() {
-
+				this.penaltyPostcodeLayer.setMap(null);
 			},
 			reverseGeocode : function(position, callback) {
 				this.geocoder.geocode({

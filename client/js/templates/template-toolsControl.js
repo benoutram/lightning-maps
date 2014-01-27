@@ -29,16 +29,18 @@ Template.toolsControl.events({
 	'click #accidentLayer' : function(event, template) {
 		if (Session.get('accidentLayerVisible')) {
 			LightningMaps.map().accidentLayerHide();
+			Session.set('accidentLayerVisible', false);
 		} else {
-			LightningMaps.map().accidentLayer();
+			LightningMaps.map().accidentLayerShow();
 			Session.set('accidentLayerVisible', true);
 		}
 	},
 	'click #penaltyPostcodeLayer' : function(event, template) {
 		if (Session.get('penaltyPostcodeLayerVisible')) {
 			LightningMaps.map().penaltyPostcodeLayerHide();
+			Session.set('penaltyPostcodeLayerVisible', false);
 		} else {
-			LightningMaps.map().penaltyPostcodeLayer();
+			LightningMaps.map().penaltyPostcodeLayerShow();
 			Session.set('penaltyPostcodeLayerVisible', true);
 		}
 	}
