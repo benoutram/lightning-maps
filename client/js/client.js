@@ -7,8 +7,9 @@ Meteor.subscribe("accident", accidentDayOfWeek);
 Meteor.subscribe("markers");
 Meteor.subscribe("penaltyPostcode");
 
+// Default values for determining visibility
 Session.setDefault('mapInitialised', false);
-
-// Default values for determining control visibility
+Session.setDefault('accidentLayerVisible', false);
+Session.setDefault('penaltyPostcodeLayerVisible', false);
 Session.setDefault('markerControlVisible', false);
 Session.setDefault('centerControlVisible', false);

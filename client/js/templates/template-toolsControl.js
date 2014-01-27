@@ -25,5 +25,21 @@ Template.toolsControl.events({
 	},
 	'click #center' : function(event, template) {
 		Session.set('centerControlVisible', true);
+	},
+	'click #accidentLayer' : function(event, template) {
+		if (Session.get('accidentLayerVisible')) {
+			LightningMaps.map().accidentLayerHide();
+		} else {
+			LightningMaps.map().accidentLayer();
+			Session.set('accidentLayerVisible', true);
+		}
+	},
+	'click #penaltyPostcodeLayer' : function(event, template) {
+		if (Session.get('penaltyPostcodeLayerVisible')) {
+			LightningMaps.map().penaltyPostcodeLayerHide();
+		} else {
+			LightningMaps.map().penaltyPostcodeLayer();
+			Session.set('penaltyPostcodeLayerVisible', true);
+		}
 	}
 });

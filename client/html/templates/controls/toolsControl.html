@@ -4,14 +4,22 @@
 			<legend>
 				<i class="fa fa-wrench"></i> Tools <i class="fa fa-user"></i> {{loginButtons}}
 			</legend>
+			{{#if currentUser}}
 			<button id="addMarker" type="button" class="pure-button pure-button-add">
-				<i class="fa fa-map-marker"></i> Add Marker
+				<i class="fa fa-map-marker"></i> Marker
 			</button>
+			{{/if}}
 			<button id="geolocation" type="button" class="pure-button pure-button-add">
-				<i class="fa fa-location-arrow"></i> Geolocation
+				<i class="fa fa-location-arrow"></i> Geolocate
 			</button>
 			<button id="center" type="button" class="pure-button pure-button-add">
 				<i class="fa fa-anchor"></i> Center
+			</button>
+			<button id="accidentLayer" type="button" class="pure-button pure-button-add">
+				<i class="fa fa-ambulance"></i> Accidents
+			</button>
+			<button id="penaltyPostcodeLayer" type="button" class="pure-button pure-button-add">
+				<i class="fa fa-tachometer"></i> Penalties
 			</button>
 		</form>
 	</div>

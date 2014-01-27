@@ -31,6 +31,25 @@ LightningMaps.map = function() {
 					styles : [ LightningMaps.DEFAULT_STYLE ],
 				};
 			},
+			accidentLayer : function() {
+				var markers = [];
+
+				Accident.find({}, {
+					"Latitude" : 1,
+					"Longitude" : 1
+				}).forEach(
+						function(accidentDoc) {
+							markers.push(new google.maps.Marker({
+								"position" : new google.maps.LatLng(
+										accidentDoc.Latitude,
+										accidentDoc.Longitude)
+							}));
+						});
+				this.clusterMap(markers);
+			},
+			accidentLayerHide : function() {
+
+			},
 			addMarker : function(markerVal) {
 				if (!this.gmap) {
 					console.log('Not initialised yet');
@@ -39,28 +58,20 @@ LightningMaps.map = function() {
 					if (_.isUndefined(existingMarker)) {
 						// marker doesn't exist so add it
 						/*
-						var infobox = new InfoBox(
-								{
-									content : document
-											.getElementById("infobox"),
-									disableAutoPan : false,
-									maxWidth : 150,
-									pixelOffset : new google.maps.Size(-140, 0),
-									zIndex : null,
-									boxStyle : {
-										background : "url('http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/examples/tipbox.gif') no-repeat",
-										opacity : 0.75,
-										width : "280px"
-									},
-									closeBoxMargin : "12px 4px 2px 2px",
-									closeBoxURL : "http://www.google.com/intl/en_us/mapfiles/close.gif",
-									infoBoxClearance : new google.maps.Size(1,
-											1)
-								});
-						var infowindow = new google.maps.InfoWindow({
-							content : '<div id="content"><p>'
-									+ markerVal.description + '</p></div>'
-						});*/
+						 * var infobox = new InfoBox( { content : document
+						 * .getElementById("infobox"), disableAutoPan : false,
+						 * maxWidth : 150, pixelOffset : new
+						 * google.maps.Size(-140, 0), zIndex : null, boxStyle : {
+						 * background :
+						 * "url('http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/examples/tipbox.gif')
+						 * no-repeat", opacity : 0.75, width : "280px" },
+						 * closeBoxMargin : "12px 4px 2px 2px", closeBoxURL :
+						 * "http://www.google.com/intl/en_us/mapfiles/close.gif",
+						 * infoBoxClearance : new google.maps.Size(1, 1) }); var
+						 * infowindow = new google.maps.InfoWindow({ content : '<div
+						 * id="content"><p>' + markerVal.description + '</p></div>'
+						 * });
+						 */
 						var marker = new google.maps.Marker({
 							map : this.gmap,
 							draggable : true,
@@ -71,15 +82,17 @@ LightningMaps.map = function() {
 									markerVal.latitude, markerVal.longitude)
 						});
 						/*
-						google.maps.event.addListener(marker, 'click',
-								function(event) {
-									infobox.open(this.gmap, this);
-								});*/
-						google.maps.event.addListener(marker, 'click',
-								function(event) {
-									Session.set('markerControlVisible', true);
-									Session.set('markerSelected', markerVal.id);
-								});
+						 * google.maps.event.addListener(marker, 'click',
+						 * function(event) { infobox.open(this.gmap, this); });
+						 */
+						google.maps.event
+								.addListener(marker, 'click',
+										function(event) {
+											Session.set('markerControlVisible',
+													true);
+											Session.set('markerSelected',
+													markerVal.id);
+										});
 						google.maps.event.addListener(marker, 'dragend',
 								function(event) {
 									var latitude = event.latLng.d;
@@ -129,22 +142,8 @@ LightningMaps.map = function() {
 					this.zoom(zoom);
 				}
 			},
-			clusterMap : function() {
-				var clusterMarkers = [];
-
-				Accident.find({}, {
-					"Latitude" : 1,
-					"Longitude" : 1
-				}).forEach(
-						function(accidentDoc) {
-							clusterMarkers.push(new google.maps.Marker({
-								"position" : new google.maps.LatLng(
-										accidentDoc.Latitude,
-										accidentDoc.Longitude)
-							}));
-						});
-				var markerCluster = new MarkerClusterer(this.gmap,
-						clusterMarkers);
+			clusterMap : function(markers) {
+				var markerCluster = new MarkerClusterer(this.gmap, markers);
 			},
 			geocode : function(address, callback) {
 				this.geocoder.geocode({
@@ -180,7 +179,7 @@ LightningMaps.map = function() {
 							});
 				}
 			},
-			heatmap : function() {
+			heatMap : function(data) {
 				var heatMapData = [];
 				PenaltyPostcode
 						.find({}, {
@@ -226,7 +225,34 @@ LightningMaps.map = function() {
 					content : content
 				}));
 			},
-			removeControl : function() {
+			penaltyPostcodeLayer : function() {
+				var data = [];
+				PenaltyPostcode
+						.find({}, {
+							"Latitude" : 1,
+							"Longitude" : 1,
+							"Total" : 1
+						})
+						.forEach(
+								function(penaltyPostcodeDoc) {
+									if (_.isNumber(penaltyPostcodeDoc.Latitude)
+											&& _
+													.isNumber(penaltyPostcodeDoc.Longitude)) {
+										data
+												.push({
+													location : new google.maps.LatLng(
+															penaltyPostcodeDoc.Latitude,
+															penaltyPostcodeDoc.Longitude),
+													weight : penaltyPostcodeDoc.Total
+												});
+									} else {
+										// console.log('No location found for: '
+										// + penaltyPostcodeDoc.District);
+									}
+								});
+				this.heatMap(data);
+			},
+			penaltyPostcodeLayerHide : function() {
 
 			},
 			reverseGeocode : function(position, callback) {
