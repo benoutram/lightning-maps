@@ -12,7 +12,9 @@ LightningMaps.map = function() {
 				GoogleMaps.init({
 					'sensor' : false,
 					'key' : LightningMaps.GOOGLE_API_KEY,
-					'language' : 'de',
+					//'language' : 'zh-CN',
+					'language' : 'en-GB',
+					'region' : 'hk',
 					'libraries' : 'visualization'
 				}, function() {
 					// callback
@@ -23,7 +25,19 @@ LightningMaps.map = function() {
 			},
 			mapOptions : function() {
 				return {
-					// disableDefaultUI : true,
+					panControl : false,
+					zoomControl : true,
+					zoomControlOptions : {
+						style : google.maps.ZoomControlStyle.SMALL,
+						position : google.maps.ControlPosition.RIGHT_TOP
+					},
+					mapTypeControl : true,
+					scaleControl : true,
+					streetViewControl : false,
+					overviewMapControl : true,
+					overviewMapControlOptions : {
+						opened : false,
+					},
 					zoom : LightningMaps.DEFAULT_ZOOM,
 					center : new google.maps.LatLng(
 							LightningMaps.DEFAULT_POS.latitude,
