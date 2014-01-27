@@ -145,6 +145,17 @@ LightningMaps.map = function() {
 			clusterMap : function(markers) {
 				return new MarkerClusterer(this.gmap, markers);
 			},
+			/**
+			 * Retrieve a marker that has already been added to the map.
+			 * 
+			 * @param {Object}
+			 *            markerVal
+			 */
+			existingMarker : function(markerVal) {
+				return _.find(this.markers, function(marker) {
+					return marker['id'] === markerVal['id'];
+				});
+			},
 			geocode : function(address, callback) {
 				this.geocoder.geocode({
 					address : address
@@ -232,6 +243,12 @@ LightningMaps.map = function() {
 			penaltyPostcodeLayerHide : function() {
 				this.penaltyPostcodeLayer.setMap(null);
 			},
+			removeMarker : function(markerVal) {
+				var markerVal = this.existingMarker(markerVal);
+				if (!_.isUndefined(markerVal)) {
+					markerVal.marker.setMap(null);
+				}
+			},
 			reverseGeocode : function(position, callback) {
 				this.geocoder.geocode({
 					latLng : position
@@ -256,17 +273,6 @@ LightningMaps.map = function() {
 			},
 			zoom : function(level) {
 				this.gmap.setZoom(level);
-			},
-			/**
-			 * Retrieve a marker that has already been added to the map.
-			 * 
-			 * @param {Object}
-			 *            markerVal
-			 */
-			existingMarker : function(markerVal) {
-				return _.find(this.markers, function(marker) {
-					return marker['id'] === markerVal['id'];
-				});
 			},
 			/**
 			 * Find if a marker added to the map has since been moved.

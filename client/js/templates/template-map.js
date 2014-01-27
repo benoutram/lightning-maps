@@ -17,4 +17,14 @@ Template.map.rendered = function() {
 			LightningMaps.map().addMarker(markerVal);
 		});
 	});
+
+	var markersQuery = Markers.find({}, {fields : {}});
+	var handle = markersQuery.observe({
+		removed : function(marker) {
+			var markerVal = {
+				id : marker._id
+			};
+			LightningMaps.map().removeMarker(markerVal);
+		}
+	});
 };
